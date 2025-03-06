@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>AroundMe</title>
+    <style>
+        .orange_back{
+            background-color: #ee8833;
+        }
+        .dark_back{
+            background-color: #292a33;
+            display: flex;
+            position: relative;
+        }
+        #article2{
+            width:45%;
+            text-align: center;
+            margin: 0 auto;
+        }
+        .button {
+            /*display: inline-block;*/
+            padding: 12px;
+            margin: 0 30px 0 0;
+            border: none;
+            border-radius: 3px;
+            text-decoration: none;
+            font-family: "Comfortaa", sans-serif;
+            font-weight: 300;
+            font-size: medium;
+            text-align: center;
+            color: white;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .button.black{
+            background: #292a33;
+        }
+        .button:hover.black{
+            background: #212126;
+        }
+        .button.orange {
+            background: #ee8833;
+        }
+        .button:hover.orange{
+            background: #9B4F11;
+        }
+        .row_center{
+            width:70%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .row_center.column{
+            flex-direction: column;
+        }
+        .column{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-width: 300px;
+            position: relative;
+        }
+        /* Старые обертки для первого блока колонки */
+        /*.numb{
+            width: 600px;
+            height: auto;
+            margin: 0 0 0 20px;
+        }
+        .pic{
+            width: 600px;
+            height: auto;
+            margin: 0 0 0 20px;
+        }*/
+
+        .img_numb_behind{
+            height: auto;
+            width: 45%;
+            max-width: 270px;
+            z-index: 1;
+            opacity: 0.5;
+            /*margin: 250px 0 0 0;*/
+            /*display: flex;*/
+            /*flex-direction: column;
+            align-self: center;*/
+            position: absolute;
+            top: 20%;
+            left: 45%;
+        }
+        .img_numb{
+            width: 100%;
+            height: auto;
+            margin: 10px 0 0 10px;
+            max-width: 270px;
+            opacity: 0.5;
+            z-index: 1;
+        }
+        h1{
+            font-family: "Comfortaa", sans-serif;
+            font-size: 400%;
+            font-weight: 500;
+            color: white;
+        }
+        h2{
+            font-family: "Comfortaa", sans-serif;
+            font-weight: 300;
+            font-size: 100%;
+            color: white;
+        }
+        h3{
+            font-family: "Comfortaa", sans-serif;
+            font-weight: 300;
+            font-size: 125%;
+            color: white;
+            margin: 5% 60px 0 0;
+        }
+        h4{
+            font-family: "Comfortaa", sans-serif;
+            font-weight: 300;
+            font-size: 150%;
+            color: white;
+            margin: 5% 60px 0 0;
+        }
+        h5{
+            font-family: "Comfortaa", sans-serif;
+            font-weight: 300;
+            font-size: 150%;
+            color: white;
+        }
+        p{
+            font-family: "Open Sans", sans-serif;
+            font-weight: 300;
+            font-size: 80%;
+            color: white;
+            margin: 5% 60px 10% 0;
+        }
+        a{
+            font-family: "Comfortaa", sans-serif;
+            font-weight: 300;
+            font-size: 100%;
+            color: white;
+        }
+        .row_back{
+            display: flex;
+            flex-direction: row;
+        }
+        .half_block_back{
+            background-color: #334455;
+            width:50%;
+            display: flex;
+            flex-direction: column;
+            /*flex-wrap: wrap;*/
+            justify-content: flex-end;
+            align-items: flex-end;
+            position: relative;
+        }
+        .half_block_back.smaller{
+            width:35%;
+            /*position: relative;*/
+        }
+        .half_block_back_dark{
+            background-color: #292a33;
+            width:50%;
+        }
+        .head_buttons{
+            margin: 30px 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+        }
+        .right_text{
+            margin: 10% 0 15% 20px;
+            z-index: 2;
+        }
+        .img.block2{
+            align-self: flex-start;
+            max-width: 300px;
+            position: absolute;
+            top: -8%;
+            left: 8%;
+        }
+        .img.block3{
+            align-self: flex-start;
+            max-width: 600px;
+            position: absolute;
+            top: -30%;
+            left: -50%;
+        }
+        .img_numb.three{
+            align-self: flex-start;
+            z-index: 1;
+            position: absolute;
+            /*top:  70%;*/
+        }
+        .opacity_20{
+            opacity: 0.2;
+        }
+        .width_65{
+            width: 65%;
+            flex: 1 1 0%;
+            background-position: center;
+            background-size: cover;
+        }
+        .width_65.mountains{
+            background-image: url("images/горы полароид 1.jpg");
+        }
+        .width_65.plane{
+            /*filter: brightness(40%);    !*затемнение блока*!*/
+            background-image:
+                    linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), /*тоже затемнение, только другое*/
+                    url("images/airplane.jpg");
+        }
+        .img_numb_behind.five{
+            top: -7%;
+            left: 65%;
+        }
+        .img{
+            /*width: 100%;*/
+            /*height: auto;*/
+            /*margin: 30px 0 0 0;*/
+            /*max-width: 700px;*/
+            z-index: 2;
+        }
+        .img.phones{
+            max-width: 900px;
+        }
+        .row_center_last{
+            width:60%;
+            margin: 2% auto;
+            flex-wrap: wrap;
+            align-items: center;
+            /*position: relative;*/
+        }
+        /*.img_numb_behind.six{
+            top: -7%;
+            left: 65%;
+        }*/
+        .img.gallery.first{
+            flex: 1 1 auto;
+            width: 10px;
+            margin-left: 30px;
+            /*flex: 1 1 auto;*/
+        }
+        /*.img.gallery.first.sec_pic{
+            !*flex: 1 1 auto;*!
+            max-width: 350px;
+            margin-left: 30px;
+        }*/
+        .img.gallery.sec{
+            margin-right: 30px;
+            /*max-width: 250px;*/
+            flex: 1 1 auto;
+            width: 10px;
+        }
+        /*.img.gallery.sec_p{
+            margin-right: 30px;
+
+        }
+        .img.gallery.th_p{
+            margin-right: 30px;
+            flex: 1 1 auto;
+        }*/
+        .first_row{
+            margin: 3% auto;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+        .sec_row{
+            margin: 0 auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .front_wrap{
+            width:35%;
+            position: absolute;
+            margin: 15% 33%;
+            z-index: 3;
+        }
+        .front{
+            /*width:60%;
+            margin: 0 auto;*/
+            /*position: absolute;*/
+            background: #292a33;
+            /*background-clip: padding-box;*/
+            opacity: 0.9;
+            z-index: 3;
+            padding: 10% 10%;
+            text-align: center;
+            /*justify-self: center;
+            align-self: center;*/
+        }
+        h4.last{
+            margin: auto;
+        }
+        .img_numb.six{
+            position: absolute;
+            top: 67%;
+            left: 6%;
+            width: 20%;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="orange_back">
+    <div class="row_center">
+        <div id="article">
+            <h1>AroundMe</h1>
+            <h2>Get familiar with the queen of all social media apps and start
+                sharing your life through AroundMe!</h2>
+            <div class="head_buttons">
+                <a class="button black" href="https://www.apple.com/ru/app-store/">App Store </a>
+                <a class="button black" href="https://play.google.com/store?hl=ru&gl=US">Google Play</a>
+            </div>
+        </div>
+        <div class="column">
+            <img class="img_numb_behind" src="images/01_1.png" alt="">
+            <img class="img" src="images/hand-holding-phone (low).png" alt="">
+        </div>
+    </div>
+</div>
+
+<div class="row_back">
+    <div class="half_block_back">
+        <img src="images/phones качели круг.png" alt="" class="img block2">
+        <img class="img_numb" src="images/02.png" alt="">
+    </div>
+    <div class="half_block_back_dark">
+        <div class="right_text">
+            <h3>SO YOU WANNA BE AN AROUNDME STAR?!</h3>
+            <h4>AroundMe: Everything you need to know!</h4>
+            <p>AroundMe is a social media app that allows users to share photos and videos from their lives, add captions,
+                edit filters, tweak settings, engage with others, explore and creep, and so, so much more — you just have to know what you're
+                doing so you don't get overwhelmed!</p>
+            <a class="button orange" href="read_more.html">Read more</a>
+        </div>
+    </div>
+</div>
+
+<div class="row_back">
+    <div class="half_block_back smaller">
+        <div class="right_text">
+            <h3>JULY 19, 2018</h3>
+            <h4>AroundMe now lets you see who's online for more efficient DM'ing</h4>
+            <p>AroundMe is a social media app that allows users to share photos and videos from their lives, add
+                captions, edit filters, tweak settings, engage with others, explore and creep, and so, so much more —
+                you just have to know what you're doing so you don't get overwhelmed!</p>
+            <a class="button orange" href="read_more.html">Read more</a>
+        </div>
+        <img src="images/03.png" alt="" class="img_numb three opacity_20">
+    </div>
+    <div class="width_65 mountains"></div>
+</div>
+
+<div class="row_back">
+    <div class="width_65 plane">
+        <div class="right_text">
+            <h4>AroundMe is testing out a question-asking feature in Stories</h4>
+            <p>Stories are a great way to get feedback from your followers. With the poll sticker and emoji slider sticker,
+                users can find out what their fans really think about...well, anything! I've seen individuals ask their
+                followers for opinions about which of two haircuts to get, which of two product color schemes to go forward
+                with, and even how much they loved the finale of[insert preferred TV show here].</p>
+        </div>
+    </div>
+
+    <div class="half_block_back smaller">
+        <img src="images/phone lay.png" alt="" class="img block3">
+        <img src="images/04.png" alt="" class="img_numb three opacity_20">
+    </div>
+</div>
+
+<div class="orange_back">
+    <div class="row_center column">
+        <div id="article2">
+            <h5>AroundMe adds video chat!</h5>
+            <h2>Looking to video chat with a fellow AroundMer or pal? You can effortlessly now through the
+                app itself!</h2>
+        </div>
+        <div class="column">
+            <img class="img_numb_behind five" src="images/05.png" alt="">
+            <img class="img phones" src="images/phones.png" alt="">
+        </div>
+    </div>
+</div>
+
+<div class="dark_back">
+    <div class="row_center_last">
+        <div class="first_row">
+            <img class="img gallery first" src="images/boats.jpeg" alt="">
+            <img class="img gallery first" src="images/airplane.jpg" alt="">
+        </div>
+        <div class="sec_row">
+            <img class="img gallery sec" src="images/качели.jpg" alt="">
+            <img class="img gallery sec" src="images/walking.jpg" alt="">
+            <img class="img gallery sec" src="images/sitting.jpg" alt="">
+        </div>
+        <img class="img_numb six" src="images/06.png" alt="">
+    </div>
+    <div class="front_wrap">
+        <div class="front">
+            <div class="front_text">
+                <h4 class="last">How much does it cost?</h4>
+                <h2>AroundMe is free as a bee! There aren't any in-app purchases or upgrades, either!</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

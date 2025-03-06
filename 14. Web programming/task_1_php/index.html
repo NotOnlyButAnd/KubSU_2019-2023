@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MY FORM</title>
+    <link rel = "stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+<header><h2>Формочка!</h2></header>
+<form action="" method="post" id="my_form">
+    <p>Фамилия</p><input class='field' type="text" name='second_name' required>
+    <p>Имя</p><input class='field' type="text" name='first_name' required>
+    <p>Телефон</p><input class='field' type="tel" pattern="[+]{0,1}[78]\d{10}" name='phone' required>
+    <input class='button' type="submit" value='Проверить номер'>
+</form>
+
+<div id='div_answer'></div>
+
+<script>
+    const form = document.getElementById('form');
+    // Вызов функции проверки телефона
+    $('form').submit(function() {
+        check_phone();
+        return false;
+    });
+    function check_phone() {
+        $.ajax({
+            url:     "phone.php", //url страницы
+            type:     "POST", //метод отправки
+            dataType: "html", //формат данных
+            // Сеарилизуем объект
+            data: $('form').serialize(),
+
+            //Данные успешно получены
+            success: function(response) {
+                $('#div_answer').html(response);
+            },
+            // ошибка
+            error: function(response) {
+                let str = 'Ошибка! -> ' + response
+                $('#div_answer').html(str);
+            }
+        });
+    }
+</script>
+</body>
+</html>

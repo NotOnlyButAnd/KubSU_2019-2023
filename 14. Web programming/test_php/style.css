@@ -1,0 +1,31 @@
+header {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.valid{
+    display: inline;
+    color: green;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.invalid{
+    display: inline;
+    color: red;
+    font-style: italic;
+    font-weight: bold;
+}
+
+a {
+    display: block;
+    margin: 10px auto;
+    width: 20%;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid black;
+    text-decoration: none;
+    font-family: Comic sans, sans-serif;
+    color: black;
+}
