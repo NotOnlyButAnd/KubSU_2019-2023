@@ -1,0 +1,13 @@
+---
+- !ruby/object:Scooter
+  id: '0001'
+  charge: 90
+  isEnable: true
+- !ruby/object:Scooter
+  id: '0002'
+  charge: 87
+  isEnable: true
+- !ruby/object:Scooter
+  id: '0003'
+  charge: 0
+  isEnable: false

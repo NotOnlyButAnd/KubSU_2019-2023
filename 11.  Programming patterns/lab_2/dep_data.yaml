@@ -1,0 +1,40 @@
+---
+- !ruby/object:Department
+  name: Отдел продаж
+  phone: "+79996332211"
+  commitments:
+  - Создание отчетов
+  - Реализация продаж
+  - Изменение тарифов
+  selected_comm_index:
+- !ruby/object:Department
+  name: Отдел контроля качества
+  phone: "+78612623388"
+  commitments:
+  - Проверка качества продукции
+  - Проверка качества работы
+  selected_comm_index:
+- !ruby/object:Department
+  name: Бухгалтерский отдел
+  phone: "+79282336751"
+  commitments:
+  - Отчет по зарплатам сотрудников
+  - Ведомости о закупках
+  - Денежные переводы
+  selected_comm_index:
+- !ruby/object:Department
+  name: Fourth Department
+  phone: "+78005553535"
+  commitments:
+  - W1
+  - W2
+  - W3
+  selected_comm_index:
+- !ruby/object:Department
+  name: Fourth Department
+  phone: "+78005553535"
+  commitments:
+  - W1
+  - W2
+  - W3
+  selected_comm_index:

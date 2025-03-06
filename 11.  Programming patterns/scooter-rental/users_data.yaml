@@ -1,0 +1,10 @@
+---
+- !ruby/object:User
+  login: s0153478
+  phone: "+79529762139"
+- !ruby/object:User
+  login: s0153612
+  phone: "+79892805802"
+- !ruby/object:User
+  login: s0142987
+  phone: "+79996332237"
