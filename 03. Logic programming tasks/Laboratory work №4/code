@@ -1,0 +1,343 @@
+% task1.1 - чтение списка с клавиатуры
+read_list(0,[]):-!.
+read_list(N, [Head|Tail]):-read(Head), N1 is N -1, read_list(N1,Tail).
+
+% task1.2 - вывод списка на экран
+write_list([]):-!.
+write_list([Head|Tail]):-write(Head),nl,write_list(Tail).
+
+% + обязательно аргумент должен быть унифицирован
+% - всегда не унифицирован
+% ? как ун. так и неун.
+
+% task2 - предикат (сумма эл-тов списка) и программа
+% рекурсия ВНИЗ
+sum_list_down(List, Sum):- sum_list_down(List, 0, Sum).
+sum_list_down([], Sum, Sum):-!.
+sum_list_down([Head|Tail], S, Sum):- S1 is S + Head, sum_list_down(Tail, S1, Sum).
+
+pr4_2():-write("write N: "), read(N), read_list(N, List),
+    sum_list_down(List,Sum), write(Sum).
+
+% task3 - сумма эл-тов списка
+% рекурсия ВВЕРХ
+sum_list_up([], 0):-!.
+sum_list_up([Head|Tail], Sum):- sum_list_up(Tail, Sum1), Sum is Sum1 + Head.
+
+% task4 - номер эл-та \ эл-т по номеру \ или проверка эл-та&номера
+list_el_numb(List, Elem, Number):-list_el_numb(List, Elem, 0, Number).
+list_el_numb([H|_], H, Number, Number):- !.
+list_el_numb([_|T], Elem, I, Number):- I1 is I + 1, list_el_numb(T, Elem, I1, Number).
+
+% task4
+pr4_4():-write("write N: "), read(N), read_list(N, List),write("write elem: "), read(Elem),
+    list_el_numb(List, Elem, Number), write("number: "), write(Number), !.
+pr4_4():- write("there is no element!").
+
+% task5
+pr4_5:-write("Write N: "), read(N), read_list(N,List), write("Write elem num: "),
+    read(Number), list_el_numb(List, Elem, Number),
+    write("elem: "), write(Elem), !.
+pr4_5:-write("there is no such number!").
+
+% task6 - min эл-т списка
+min_list_up([H|[]], H):-!.
+min_list_up([H|T], Min):- min_list_up(T, Min1),
+    (H < Min1 -> Min is H; Min is Min1).
+
+% task7 - min эл-т списка
+% рекурсия ВНИЗ
+min_list_down([H|T], Min):- min_list_down([H|T], H, Min).
+min_list_down([], Min, Min):-!.
+min_list_down([H|T], CurMin, Min):-
+    (H < CurMin -> CurMin1 is H; CurMin1 is CurMin),
+    min_list_down(T, CurMin1, Min).
+
+% task8
+pr4_8:- write("Write N: "), read(N), read_list(N,List),
+    min_list_up(List, Min), write("Min: "), write(Min).
+
+% task9 - true если эл-т есть в списке
+in_list([El|_],El).
+in_list([_|Tail],El):- in_list(Tail, El).
+
+% ?- in_list([1,2,3],El), write(El),fail.
+% ?- read_list(3,List), in_list(List,X), in_list(List,Y), Z is X * Y, write(Z), nl, fail .
+
+%append(List1, List2, List).
+append1([], List2, List2).
+append1([H|T1], List2, [H|T2]):- append1(T1, List2, T2).
+
+% task10 - переворачивает список
+mirror([H|[]], [H|[]]):-!.
+mirror([H|T], ListNew):- mirror(T, List), append1(List,[H], ListNew).
+
+% task11 - если sublist в list в том же порядке - true
+p([],[],0):-!.
+p([],[],1):-!.
+p([],[_|_],1):-!.
+p([Hsub|Tsub], [H|T],Flag):- (Hsub = H ->
+                             (Flag1 is 1, p(Tsub,T,Flag1));
+                             (Flag=0 -> p([Hsub|Tsub],T,Flag);
+                             ([H|T] \= [] -> p([Hsub|Tsub],T,0);fail))).
+p(SubList,List):-p(SubList,List,0).
+
+% task12 - удалить эл-т с заданным номером
+del_by_num([],_,NewList,_,NewList):-!.
+del_by_num([H|T],Num,NewList, I, LastList):- I1 is I + 1,
+    (I \= Num -> append1(NewList, [H], NewList1);
+    append1(NewList,[],NewList1)),
+    del_by_num(T, Num, NewList1, I1, LastList).
+del_by_num(List,Num, Itog):-del_by_num(List, Num, [], 0, Itog).
+
+%task13 - удаляет все эл-ты заданные данному
+del_all_same([],_,NewList,NewList):-!.
+del_all_same([H|T],El,NewList, LastList):-
+    (El \= H -> append1(NewList, [H], NewList1);
+    append1(NewList,[],NewList1)),
+    del_all_same(T, El, NewList1, LastList).
+del_all_same(List,El, Itog):-del_all_same(List, El, [], Itog).
+
+% task14 - все эл-ты по 1 разу?
+is_wout_repeat([], _):-!.
+is_wout_repeat([H|T], ElemsList):-
+    (in_list(ElemsList, H) -> fail;
+    append1(ElemsList, [H], NewElemsList)),
+    is_wout_repeat(T, NewElemsList).
+is_wout_repeat([]):-!.
+is_wout_repeat([H|T]):- is_wout_repeat(T,[H]).
+
+% task 15 - удалить все повторы
+% [1,1,2,3,3,3] -> [1,2,3]
+get_wout_rep([], Itog, Itog):-!.
+get_wout_rep([H|T], TempItog, Itog):-
+    (in_list(TempItog, H) -> append1(TempItog,[],NewItog);
+    append1(TempItog, [H], NewItog)),
+    get_wout_rep(T, NewItog, Itog).
+get_wout_rep([], []):-!.
+get_wout_rep([H|T], Itog):- get_wout_rep([H|T], [H], Itog).
+
+% task 16 - кол-во повторов El в списке
+count_rep([],_,0):-!.
+count_rep([H|T],El,Count):- count_rep(T,El,Count1),
+    (El = H -> Count is Count1 + 1; Count is Count1).
+
+% task 17 - длина списка
+length_list([], 0):-!.
+length_list([_|T], L):- length_list(T, L1), L is L1 + 1.
+
+
+% Задача 9 - Дан массив целых чисел
+% Найти эл-ты, находящиеся перед последним минимальным
+% На выход поступит список чиел всех подряд, идущих до last_min
+read_9(N,List):- write("Write N: "), read(N), write("Input lists elems: "),nl,
+    read_list(N,List).
+write_9(List):- write("All elems befoe last min: "),nl, write_list(List).
+
+% Находит индекс последнего минимума
+% +[H|T] - список, в котором ищем
+% +Min - числовое значение минимума
+% +I - индекс текущего эл-та. При вызове предиката надо 0 ставить
+% +CurrInd - индекс последнего найденного минимума. При вызове предиката
+% надо 0 ставить
+% ?Ind - индекс последнего минимума в списке (в задаче - при вызове это
+% должна быть переменная
+ind_last_min([], _, _, Ind, Ind):-!.
+ind_last_min([H|T],Min,I,CurrInd, Ind):- I1 is I+1,
+    (H=Min -> CurrInd1 = I; CurrInd1 = CurrInd),
+    ind_last_min(T,Min,I1,CurrInd1,Ind).
+
+% получает подсписок из списка - все эл-ты до эл-та с номером Num
+% +[H|T] - список, из которого вытаскиваем
+% +I - индекс текущего эл-та. При вызове предиката надо 0 ставить
+% +Num - индекс, до которого копируем список (не включая)
+% +CurrResult - текущий итоговый список (в него складываем головы)
+% ?Result - конечный итоговый список
+get_l_bef_num(_,Num,Num,Res,Res):-!.
+get_l_bef_num([H|T],I,Num,CurrResult,Result):-
+    append1(CurrResult,[H],NewRes), I1 is I+1,
+    get_l_bef_num(T,I1,Num,NewRes,Result).
+
+main_9:- read_9(N,List), min_list_up(List, Min),
+    ind_last_min(List,Min,0,0,LMInd), get_l_bef_num(List,0,LMInd,[],Result),
+    write_9(Result).
+
+
+% Задача 10 - Даны 2 массива. Найти кол-во повторяющихся по
+% значению элементов
+% [1,2,3,4,5,1]
+% [6,7,2,8,1,1]
+% 1,2 -> Count=2
+read_10(N,List1,M,List2):- write("Write N: "), read(N),
+    write("Input list1 elems: "), nl, read_list(N,List1),
+    write("Write M: "), read(M), write("Input list2 elems: "), nl,
+    read_list(M,List2).
+write_10(Count):- write("Count of repeating elems: "),nl, write(Count).
+
+% max из 2-х эл-тов из ЛР3. Вызов: max(+Х,+Y,?Z)
+max(X,Y,X):-X>Y,!.
+max(_,Y,Y).
+
+% ищет кол-во повторяющихся эл-тов 1 и 2 списков. выше показал как понял
+% +[H1|T1] - 1 список
+% +List2 - 2 список
+% +LReady - список уже обработанных из 1-го списка
+% +CurrCount - текущее кол-во накопленное
+% ?Count - итоговое кол-во
+count_rep_10([],_,_,Count,Count):-!.
+count_rep_10([H1|T1],List2,LReady,CurrCount,Count):-
+    ((in_list(LReady,H1),in_list(List2,H1)) ->
+    (NewCurC = CurrCount, append1(LReady,[],LReadyNew));
+    (in_list(List2,H1) ->
+    (NewCurC is CurrCount+1, append1(LReady,[H1],LReadyNew));
+    (NewCurC = CurrCount,append1(LReady,[],LReadyNew)))),
+    count_rep_10(T1,List2,LReadyNew,NewCurC,Count).
+
+% выбираем максимальный список и его ставим первым так как предикат
+% поиска построен на прохождении 1-го списка целиком
+main_10:- read_10(N,List1,M,List2), max(N,M,Max),
+    (N = Max -> count_rep_10(List1,List2,[],0,Count);
+    count_rep_10(List2,List1,[],0,Count)),
+    write_10(Count).
+
+
+% Задача 22 - Дан массив. И интервал (a,b). Найти кол-во минимумов в
+% этом интервале (по индексам интервал)
+read_22(N,List,A,B):- write("Write N: "), read(N),
+    write("Input lists elems: "), nl, read_list(N,List),
+    write("Write your interval..."),nl, write("a: "), read(A),
+    write("b: "), read(B).
+write_22(Count):- write("Count of min in interval: "),nl, write(Count).
+
+% считает ко-лво минимумов в интервале (по индексам)
+% +[H1|T1] - список исходный
+% +Min - min эл-т списка (ну или любой другой, в задаче - min)
+% +I - индекс текущего эл-та
+% +А - начало интервала
+% +В - конец интервала
+% +CurrCount - текущее кол-во накопленное
+% ?Count - итоговое кол-во
+count_in_interval([],_,_,_,_,Count,Count):-!.
+count_in_interval([H|T],Min,I,A,B,CurrC,Count):-
+    ((I>A, I<B) ->
+    (H = Min -> NewCurrC is CurrC + 1; NewCurrC is CurrC);
+    NewCurrC is CurrC), I1 is I + 1,
+    count_in_interval(T,Min,I1,A,B,NewCurrC,Count).
+
+main_22:- read_22(N,List,A,B), min_list_up(List,Min),
+    count_in_interval(List,Min,0,A,B,0,Count), write_22(Count).
+
+
+% Задача 24 - Дан массив. Найти 2 наибольших элемента
+read_24(N,List):- write("Write N: "), read(N), write("Input lists elems: "),nl,
+    read_list(N,List).
+write_24(Max1,Max2):- write("Maxes: "),nl, write(Max1),nl, write(Max2).
+
+% +[H|T] - список
+% ?Max - максимальный эл-т
+max_list_up([H|[]], H):-!.
+max_list_up([H|T], Max):- max_list_up(T, Max1),
+    (H > Max1 -> Max is H; Max is Max1).
+
+main_24:-read_24(N,[H|T]), max_list_up([H|T],Max1),
+    del_all_same([H|T],Max1,List2), max_list_up(List2,Max2),
+    write_24(Max1,Max2).
+
+
+% Задача 31 - найти кол-во четных эл-тов в массиве
+read_31(N,List):- write("Write N: "), read(N), write("Input lists elems: "),nl,
+    read_list(N,List).
+write_31(Count):- write("Count of chetnyh: "), write(Count).
+
+% подсчет кол-ва четных эл-тов
+% +[H|T] - список
+% +CurC - уже посчитанное кол-во
+% ?Count - итоговое кол-во четных
+count_chetn([],C,C):-!.
+count_chetn([H|T],CurC,Count):-
+    (0 is H mod 2 -> CurC1 is CurC + 1; CurC1 is CurC),
+    count_chetn(T,CurC1,Count).
+
+main_31:-read_31(N,List), count_chetn(List,0,Count), write_31(Count).
+
+
+% задача 34 - найти эл-ты значение которых принадлежит [а,b]
+read_34(N,List,A,B):- write("Write N: "), read(N),
+    write("Input lists elems: "), nl, read_list(N,List),
+    write("Write your otrezok..."),nl, write("a: "), read(A),
+    write("b: "), read(B).
+write_34(List):- write("Elems in otrezok: "),nl, write_list(List).
+
+% +[H|T] - список
+% +A - начало отрезка
+% +B - конец отрезка
+% +CurRes - накопленные числа из отрезка(без повторов)
+% ?Result - итоговый результат
+get_all_in_seg([],_,_,Result,Result):-!.
+get_all_in_seg([H|T],A,B,CurRes,Result):-
+    ((H>=A,H=<B) ->
+    (in_list(CurRes,H) -> append1(CurRes,[],CurRes1);
+     append1(CurRes,[H],CurRes1));
+    append1(CurRes,[],CurRes1)),
+    get_all_in_seg(T,A,B,CurRes1,Result).
+
+main_34:-read_34(N,List,A,B), get_all_in_seg(List,A,B,[],Result),
+    write_34(Result).
+
+
+% задача 40 - найти мин чет эл-т
+read_40(N,List):- write("Write N: "), read(N),
+    write("Input lists elems: "), nl, read_list(N,List).
+write_40(Min):- write("Min chet elem: "),nl, write(Min).
+
+% +[H|T] - список
+% ?Min - куда будем складывать минимум
+% Чтобы найти минимум надо вызвать list_min_chet от 2-х аргументов:
+% списка, по которому идет поиск, и неинициализированной (или да)
+% переменной куда будем класть минимум
+% Сперва ищется четный элемент. Если его не находится, то fail
+
+%is_chet([],F,F):-!.
+%is_chet([H|T],CurF,F):- (0 is H mod 2 -> CurF1 is 1; CurF1 is CurF),
+%     is_chet(T,CurF1,F).
+
+list_min_chet([H|T],Min):- 0 is H mod 2,!,
+    list_min_chet(T,H,Min).
+list_min_chet([_|T],Min):- list_min_chet(T,Min).
+
+list_min_chet([],Min,Min):-!.
+list_min_chet([H|T],CurMin,Min):-
+    0 is H mod 2, H < CurMin, list_min_chet(T,H,Min),!.
+list_min_chet([_|T],CurMin,Min):-list_min_chet(T,CurMin,Min).
+
+main_40:-read_40(N,List),
+    (list_min_chet(List,Min) -> write_40(Min);
+    write("there is no one chetn elem!")).
+
+
+
+% задача 46 - вывести сперва все положит, затем все отриц эл-ты
+read_46(N,List):- write("Write N: "), read(N),
+    write("Input lists elems: "), nl, read_list(N,List).
+write_46(Poloz,Otriz):- write("Polozitelniye: "),nl, write_list(Poloz),
+    write("Otrizatelniye: "),nl, write_list(Otriz).
+
+% +[H|T] - список
+% +CurPoloz - текущие накопленные положительные эл-ты
+% ?Poloz - итоговый список положит
+% +CurOtriz - текущие накопленные отрицательные эл-ты
+% ?Otriz - итоговый список отрицат
+% При вызове предиката CurPoloz и CurOtriz надо ставить [] т.к. в пустой
+% список начинаем складывать элементы
+get_pol_otr([],Poloz,Poloz,Otriz,Otriz):-!.
+get_pol_otr([H|T],CurPoloz,Poloz,CurOtriz,Otriz):-
+    (H = 0 ->
+            get_pol_otr(T,CurPoloz,Poloz,CurOtriz,Otriz);
+            (H<0 ->
+            append1(CurOtriz,[H],CurOtrizNew), append1(CurPoloz,[],CurPolozNew);
+            append1(CurOtriz,[],CurOtrizNew), append1(CurPoloz,[H],CurPolozNew)),
+            get_pol_otr(T,CurPolozNew,Poloz,CurOtrizNew,Otriz)).
+
+
+main_46:-read_46(N,List),get_pol_otr(List,[],Poloz,[],Otriz),
+    write_46(Poloz,Otriz).

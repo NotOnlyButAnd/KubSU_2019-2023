@@ -1,0 +1,117 @@
+man(voeneg).
+man(ratibor).
+man(boguslav).
+man(velerad).
+man(duhovlad).
+man(svyatoslav).
+man(dobrozhir).
+man(bogomil).
+man(zlatomir).
+man(aglay).
+man(vlasiy).
+
+woman(goluba).
+woman(lubomila).
+woman(bratislava).
+woman(veslava).
+woman(zhdana).
+woman(bozhedara).
+woman(broneslava).
+woman(veselina).
+woman(zdislava).
+woman(auda).
+woman(kvasena).
+
+parent(voeneg,ratibor).
+parent(voeneg,bratislava).
+parent(voeneg,velerad).
+parent(voeneg,zhdana).
+
+parent(goluba,ratibor).
+parent(goluba,bratislava).
+parent(goluba,velerad).
+parent(goluba,zhdana).
+
+parent(ratibor,svyatoslav).
+parent(ratibor,dobrozhir).
+parent(lubomila,svyatoslav).
+parent(lubomila,dobrozhir).
+
+parent(boguslav,bogomil).
+parent(boguslav,bozhedara).
+parent(bratislava,bogomil).
+parent(bratislava,bozhedara).
+
+parent(velerad,broneslava).
+parent(velerad,veselina).
+parent(veslava,broneslava).
+parent(veslava,veselina).
+
+parent(duhovlad,zdislava).
+parent(duhovlad,zlatomir).
+parent(zhdana,zdislava).
+parent(zhdana,zlatomir).
+
+parent(auda,lubomila).
+parent(auda,boguslav).
+parent(auda,duhovlad).
+parent(aglay,lubomila).
+parent(aglay,boguslav).
+parent(aglay,duhovlad).
+
+parent(vlasiy,veslava).
+parent(kvasena,veslava).
+
+men():- man(X), write(X),nl,fail.
+
+women():- woman(X), write(X),nl,fail.
+
+children(X):-parent(X,Y),write(Y),nl,fail.
+
+mother(X,Y):-parent(X,Y),woman(X).
+
+mother(X):-mother(Y,X),write(Y).
+
+father(X,Y):-parent(X,Y),man(X).
+
+father(X):-father(Y,X),write(Y).
+
+brother(X,Y):-mother(Z,X),mother(Z,Y),man(X),X\=Y.
+
+brothers(X):-brother(Y,X),write(Y),nl,fail.
+
+%находим ребенкаY, кладем его в Z. проверяем является ли Х мамой Z.
+wife(X,Y):- parent(Y,Z), !, mother(X,Z).
+
+wife(X):- man(X), parent(X,Z), !, mother(Z).
+
+b_s(X,Y):-mother(Z,X), mother(Z,Y), X\=Y.
+
+b_s(X):- b_s(Y,X), write(Y), nl, fail.
+
+grand_pa(X,Y):- parent(Z,Y), parent(X,Z), man(X).
+
+grand_pas(X):- parent(Y,X), parent(Z,Y), man(Z), write(Z), nl, fail.
+
+%находим родителя X, кладем в Z. Проверяем, является ли Z дитём Y.
+grand_da(X,Y):- parent(Z, X), parent(Y,Z), woman(X).
+
+grand_das(X):- grand_da(Z,X), write(Z), nl, fail.
+
+grand_pa_and_son(X,Y):- (grand_pa(X,Y), man(Y));(grand_pa(Y,X), man(X)).
+
+%построим вспомагательный предикат проверки бабушки
+grand_ma(X,Y):- parent(Z,Y), parent(X,Z), woman(X).
+
+grand_ma_and_son(X,Y):- (grand_ma(X,Y), man(Y));(grand_ma(Y,X), man(X)).
+
+%находим родителя Y, кладем в Z. Проверяем, является ли X братом Z.
+uncle(X,Y):- parent(Z,Y), brother(X,Z).
+
+uncles(X):- uncle(Z,X), write(Z), nl, fail.
+
+% находим родителя X, кладем в Z. Проверяем, является ли Y братом или
+% сестрой Z.
+nephew(X,Y):- parent(Z,X), b_s(Z,Y), man(X).
+
+nephews(X):- nephew(Z,X), write(Z), nl, fail.

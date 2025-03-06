@@ -1,0 +1,180 @@
+%task1 - maximum (X,Y)
+%max(X,Y,Z):-X>Y,Z is X.
+%max(X,Y,Z):-X=<Y,Z is Y.
+
+%max(X,Y,X):-X>Y.
+%max(X,Y,Y):-X=<Y.
+
+max(X,Y,X):-X>Y,!.
+max(_,Y,Y).
+
+%task2 - maximum (X, Y, U)
+max(X,Y,U,X):-X>Y,X>U,!.
+max(_,Y,U,Y):-Y>U,!.
+max(_,_,U,U).
+
+%2* - maximum (X, Y, U) но с использованием max (X, Y)
+max1(X,Y,U,Z):-max(X,Y,A),max(A,U,Z).
+
+% task3 - факториал
+% рекурсия ВВЕРХ
+fact(0,1):- !.
+fact(N,X):- N1 is N-1, fact(N1,X1), X is X1*N.
+
+% task4 - факториал
+% рекурсия ВНИЗ
+fact1(N,X,N,X):-!.
+fact1(I,F,N,X):-I1 is I+1,F1 is F*I1,fact1(I1,F1,N,X).
+fact1(N,X):-fact1(0,1,N,X).
+
+% task5 - число фиббоначи с номером N
+% рекурсия ВВЕРХ
+% 1 1 2 3 5 8 13 21 34 ... - ЧИСЛА
+% 1 2 3 4 5 6  7  8  9 ... - НОМЕРА
+fib(1,_, 1):-!.
+fib(2,1, 1):-!.
+fib(N, X, X1):- N1 is N - 1, fib(N1, X2, X), X1 is X + X2.
+fib(N,X):- fib(N, _, X).
+
+% task6 - число Фиббоначи с номером N
+% рекурсия ВНИЗ
+fib1(N,_,X,N,X):-!.
+fib1(I, X1, X2, N, X):- I1 is I + 1, Xnew is X1 + X2, fib1(I1, X2, Xnew, N, X).
+fib1(1,1):-!.
+fib1(N,X):- fib1(2, 1, 1, N, X).
+
+% task7 - сумма цифр числа
+% рекурсия ВВЕРХ
+sum(0,0):-!.
+sum(N,S):-N1 is N div 10, sum(N1,S1), S is S1+N mod 10.
+
+% task8 - сумма цифр числа
+% рекурсия ВНИЗ
+sum1(N,S):-sum(N,0,S).
+sum1(0,S,S):-!.
+sum1(A,Sum,S):-Ad is A mod 10, Am is A mod 10, Sum1 is Sum + Am, sum(Ad, Sum1, S).
+
+%task9 - произведение цифр числа
+% рекурсия ВВЕРХ
+% T отдельно потому что умножение не рбаботало почему-то
+mul(0,1):-!.
+mul(N,M):-N1 is N div 10, mul(N1,M1), T is N mod 10, M is M1 * T.
+
+%task10 - произведение цифр числа
+% рекурсия ВНИЗ
+mul1(0, 0):-!.
+mul1(N,M):-mul1(N,1,M).
+mul1(0,M,M):-!.
+mul1(A,Mul,M):- Ad is A div 10, Am is A mod 10,
+    Mul1 is Mul * Am, mul1(Ad, Mul1, M).
+
+% task11.1 - макс цифра числа, не делящаяся на 3
+% рекурсия ВВЕРХ
+max_not3(0, -1):-!.
+max_not3(N, Max):- N1 is N div 10, max_not3(N1, Max1), T is N mod 10,
+    T1 is T mod 3, (0 \= T1 -> max(Max1, T, Max); Max is Max1).
+task11_1:- write("N: "), read(N), max_not3(N,Max),
+    (Max is -1 -> write("There is no such digit!"); write("Max: "), write(Max)).
+
+% task11.2 - макс цифра числа, не делящаяся на 3
+% рекурсия ВНИЗ
+max_not3_down(N, Max):- max_not3_down(N, -1, Max).
+max_not3_down(0, Max, Max):-!.
+max_not3_down(N, CurMax, Max):- M10 is N mod 10, M3 is M10 mod 3,
+    (0 \= M3 -> max(CurMax, M10, CurMax1); CurMax1 is CurMax),
+    N1 is N div 10, max_not3_down(N1, CurMax1, Max).
+task11_2:- write("N: "), read(N), max_not3_down(N,Max),
+    (Max is -1 -> write("There is no such digit!"); write("Max: "), write(Max)).
+
+% task12.1 - НОД 2-х чисел
+nod(N,M,Nod):- max(N,M,X), nod(N,M,X, Nod).
+nod(_, _, 1, 1):-!.
+nod(N,M,CurDel,Nod):- CurDelNew is CurDel - 1, nod(N,M,CurDelNew, NodNew),
+    ((0 is N mod CurDel, 0 is M mod CurDel) -> Nod is CurDel; Nod is NodNew).
+
+% алгоритм Евклида НОД (хотя бы 1 != 0)
+% если 1 из исходных = 0, то НОД = 2 числу
+nod_evcl(N,0,N):-!.
+nod_evcl(0,N,N):-!.
+nod_evcl(N,M,Nod):-
+    (N>M -> (Rfirst is N mod M,nod_evcl1(N,M,Rfirst,Nod));
+    (Rfirst is M mod N, nod_evcl1(M,N,Rfirst,Nod))).
+nod_evcl1(_,M,0,M):-!.
+nod_evcl1(_,M,R,Nod):- R1 is M mod R, nod_evcl1(M,R,R1,Nod).
+
+% task12.2 - Проверить число на простоту
+% Просто́е число́ — это натуральное число, которое имеет ровно два
+% РАЗЛИЧНЫХ натуральных делителя: единицу и самого себя. Поэтому 1 не
+% является простым.
+is_easy_num(N):- N = 1 -> fail;(Nnew is N div 2, is_easy_num(N,Nnew)).
+is_easy_num(_, 1):-!.
+is_easy_num(N, Del):- DelNew is Del - 1, is_easy_num(N, DelNew), T is N mod Del,
+    0 \= T.
+
+% task12.3 - кол-во делителей числа найти
+% НЕ ПРОВЕРЯТЬ ЕДИНИЦУ И НОЛЬ!!!
+count_del(N,Count):- Nnew is N div 2, count_del(N,Nnew, Count).
+count_del(_, 1, 2):-!.
+count_del(N, Del, Count):- DelNew is Del - 1, count_del(N, DelNew,CountNew),
+    T is N mod Del, (0 = T -> Count is CountNew + 1; Count is CountNew).
+
+% task13 - много букв
+posl(1,1):-!.
+posl(N,Count):-  T is N mod 2,
+    (0 = T ->
+    (Nnew is N / 2, posl(Nnew, CountNew), Count is CountNew + 1);
+    (Nnew is 3 * N + 1, posl(Nnew,CountNew), Count is CountNew + 1)).
+task13(2,2, 1):-!.
+task13(MaxNum, MaxCount, N):- Nnew is N - 1, task13(MaxNumNew,CountNew,Nnew),
+    posl(N,Count), (Count > CountNew ->
+                   (MaxCount is Count, MaxNum is N);
+                   (MaxCount is CountNew, MaxNum is MaxNumNew)).
+
+% task14.1 - кол-во четных чисел, ВЗАИМНО простых с данным.
+% (дополнительно сам придумал: и меньше этого числа, а то бесконечность)
+% рекурсия ВВЕРХ
+count_chet_notvzpr(N, Count):- M is N - 1, count_chet_notvzpr(N,M,Count).
+count_chet_notvzpr(_,1,0):-!.
+count_chet_notvzpr(N,M,Count):- Mnew is M-1, count_chet_notvzpr(N,Mnew,CountNew),
+    nod(N,M,Nod),(Nod = 1 -> Count is CountNew + 1; Count is CountNew).
+
+% task14.2 - кол-во четных чисел, НЕ взаимно простых с данным.
+% (дополнительно сам придумал: и меньше этого числа, а то бесконечность)
+% рекурсия ВНИЗ
+count_chet_notvzpr1(N, Count):- M is N-1, count_chet_notvzpr1(N,M,0,Count).
+count_chet_notvzpr1(_,1,Count, Count):-!.
+count_chet_notvzpr1(N,M,CurrCount,Count):-
+    nod(N,M,Nod),(Nod \= 1 -> CurrCount1 is CurrCount + 1; CurrCount1 is CurrCount),
+    Mnew is M-1,
+    count_chet_notvzpr1(N,Mnew,CurrCount1,Count).
+
+% task15
+% на наименьший делитель исходного числа (> 1)
+naim_del(N, 1, N):-!.
+naim_del(N, CurDel, MinDel):- CurDelNew is CurDel - 1,
+    naim_del(N,CurDelNew,MinDelNew),
+    ((0 is N mod CurDel, CurDel < MinDelNew) ->
+    MinDel is CurDel; MinDel is MinDelNew).
+
+max_notvzpr_ndel(_,1,1,_):-!.
+max_notvzpr_ndel(N,M,Max,MinDel):- Mnew is M-1,
+    max_notvzpr_ndel(N,Mnew,MaxNew,MinDel),
+    nod(N,M,Nod), T is M mod MinDel,
+    ((Nod \= 1, 0 \= T, M > MaxNew) -> Max is M; Max is MaxNew).
+
+sum_bel5(0,0):-!.
+sum_bel5(N,S):-N1 is N div 10, sum_bel5(N1,S1), T is N mod 10,
+    (T < 5 -> S is S1 + T; S is S1).
+
+task15(N,Mul):- T is N/2, naim_del(N,T,MinDel),
+    M is N-1, max_notvzpr_ndel(N,M,Max,MinDel),
+    sum_bel5(N,Sum), Mul is Max * Sum.
+
+% task16
+% надо составить все перестановки из n элементов
+% и искать среди них простой максимум
+% task16(N):-!.
+
+% предикат создания первой перестановки 1234...n
+first_perm(0, 1, _):-!.
+first_perm(N, Perm, I):-!.
