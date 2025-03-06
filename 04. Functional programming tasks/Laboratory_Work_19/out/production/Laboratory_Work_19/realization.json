@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "productId": 1,
+    "count": 5,
+    "shopId": 1
+  },
+  {
+    "id": 2,
+    "productId": 2,
+    "count": 10,
+    "shopId": 1
+  },
+  {
+    "id": 3,
+    "productId": 1,
+    "count": 10,
+    "shopId": 2
+  },
+  {
+    "id": 4,
+    "productId": 4,
+    "count": 20,
+    "shopId": 2
+  },
+  {
+    "id": 5,
+    "productId": 5,
+    "count": 1,
+    "shopId": 1
+  }
+]

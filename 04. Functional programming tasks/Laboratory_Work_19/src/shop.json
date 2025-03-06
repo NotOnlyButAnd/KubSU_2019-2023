@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "address": "ул. Ставропольская, д.203, 1 этаж",
+    "productsId": [1,2,3,5],
+    "employeesId": [1,3,4,5],
+    "realizationsId": [1,2,5]
+  },
+  {
+    "id": 2,
+    "address": "ул. Ставропольская, д.203, 2 этаж",
+    "productsId": [1,4],
+    "employeesId": [1,2,3,4,5],
+    "realizationsId": [3,4]
+  }
+]

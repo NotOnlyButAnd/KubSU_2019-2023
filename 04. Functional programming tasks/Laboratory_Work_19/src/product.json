@@ -1,0 +1,9 @@
+[
+  {"id":1,
+    "name":"Яблоко",
+    "cost":35,
+    "count":1000,
+    "countSold":0,
+    "structure":"Вода",
+    "expirationDate":"2022-01-01"},
+  {"id":2,"name":"Груша","cost":50,"count":1500,"countSold":0,"structure":"вода","expirationDate":"2023-01-01"},{"id":3,"name":"Бананы","cost":80,"count":500,"countSold":0,"structure":"Undefinded","expirationDate":"2025-01-01"},{"id":4,"name":"Молоко","cost":65,"count":200,"countSold":0,"structure":"Undefinded","expirationDate":"2021-07-01"},{"id":5,"name":"Хлеб","cost":35,"count":100,"countSold":0,"structure":"Пшеничная мука; Соль; Вода","expirationDate":"2021-06-20"}]
