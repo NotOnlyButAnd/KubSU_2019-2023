@@ -1,0 +1,81 @@
+-- Создаем базу данных
+CREATE DATABASE Veterinary_Clinic
+ON
+	PRIMARY 
+	(NAME = Vet_Clinic,
+	FILENAME = 'F:\DataBase\VetClinic\DBFiles\Vet_Clinic.mdf', 
+	SIZE = 25,
+	FILEGROWTH = 5)
+    
+
+LOG ON
+	(NAME = Vet_Clinic_Log,
+	FILENAME = 'F:\DataBase\VetClinic\DBFiles\Vet_Clinic_Log.ldf',
+	SIZE = 5,
+	FILEGROWTH = 1)
+ 
+use Veterinary_Clinic
+
+-- Создаём таблицы
+
+create table Owners
+	(OwnerID int primary key identity(1,1) NOT NULL,	-- Код, Первичный ключ
+	Surname varchar(50) NOT NULL,	-- Фамилия
+	Firstname varchar(50) NOT NULL, -- Имя
+	Lastname varchar(50) NULL,  -- Отчество
+	Adress varchar(150) NOT NULL,	-- Адрес проживания
+	Phone varchar(50) NOT NULL)	-- Телефоны
+-- Примечание: в ЛР2 сделал поле Phone длины 11 симв. Но у 1 человека может быть 
+-- несколько номеров телефонов. Поэтому сделал 50 уже в этой реализации
+
+-- Вид
+create table Types
+	(TypeID int primary key identity(1,1) NOT NULL,	-- Код, Первичный ключ
+	TypeName varchar(50) NOT NULL default '')	-- Название вида
+
+-- Порода
+create table Breeds
+	(BreedID int primary key identity(1,1) NOT NULL,	-- Код, Первичный ключ
+	TypeID_FK int NOT NULL,			-- Код вида (FK)
+	foreign key (TypeID_FK) references Types (TypeID) ON DELETE CASCADE,
+	BreedName varchar(50) NOT NULL default '')	-- Название породы
+
+-- питомцы
+create table Pets
+	(PetID int primary key identity(1,1) NOT NULL,	-- Код, Первичный ключ
+	OwnerID_FK int NOT NULL,	-- Код хозяина (FK)
+	foreign key (OwnerID_FK) references Owners (OwnerID) ON DELETE CASCADE,
+	BreedID_FK int NOT NULL,	-- Код породы (FK)
+	foreign key (BreedID_FK) references Breeds (BreedID) ON DELETE CASCADE,
+	BirthDate datetime  NOT NULL default getdate())
+-- Вместо возраста, который изменять каждый год надо, ввел поле дата рождения
+-- Теперь возраст можно всегда просто посчитать
+
+-- Посещение
+create table Visits
+	(VisitID int primary key identity(1,1) NOT NULL,	-- Код, Первичный ключ
+	OwnerID_FK int NOT NULL,	-- Код хозяина (FK)
+	foreign key (OwnerID_FK) references Owners (OwnerID) ON DELETE CASCADE,
+	VisitDate date  NOT NULL default dateadd(day, 1, getdate()),	-- дата завтрашнего дня
+	VisitTime time  NOT NULL default '12:00:00')
+
+-- болезнь
+create table Illness
+	(IllnessID int primary key identity(1,1) NOT NULL,	-- Код, Первичный ключ
+	IllnessName varchar(50) NOT NULL default '')	-- название болезни
+
+-- болезнь животного
+create table PetIllness
+	(PetID_FK int NOT NULL,	-- Код животного (FK)
+	foreign key (PetID_FK) references Pets (PetID) ON DELETE CASCADE,
+	IllnessID_FK int NOT NULL,	-- Код болезни (FK)
+	foreign key (IllnessID_FK) references Illness (IllnessID) ON DELETE CASCADE)
+
+alter table Visits
+add PetID_FK int
+
+alter table Visits
+add constraint PetID_FK
+foreign key (PetID_FK)
+references Pets (PetID)
+on delete NO ACTION

@@ -1,0 +1,24 @@
+F:\Кирилл\УНИВЕР\2 курс\2 сем\проги\LW8\LW8_DataBases\bin\Debug\LW8_DataBases.exe.config
+F:\Кирилл\УНИВЕР\2 курс\2 сем\проги\LW8\LW8_DataBases\bin\Debug\LW8_DataBases.exe
+F:\Кирилл\УНИВЕР\2 курс\2 сем\проги\LW8\LW8_DataBases\bin\Debug\LW8_DataBases.pdb
+F:\Кирилл\УНИВЕР\2 курс\2 сем\проги\LW8\LW8_DataBases\obj\Debug\LW8_DataBases.csprojAssemblyReference.cache
+F:\Кирилл\УНИВЕР\2 курс\2 сем\проги\LW8\LW8_DataBases\obj\Debug\LW8_DataBases.Properties.Resources.resources
+F:\Кирилл\УНИВЕР\2 курс\2 сем\проги\LW8\LW8_DataBases\obj\Debug\LW8_DataBases.csproj.GenerateResource.cache
+F:\Кирилл\УНИВЕР\2 курс\2 сем\проги\LW8\LW8_DataBases\obj\Debug\LW8_DataBases.csproj.CoreCompileInputs.cache
+F:\Кирилл\УНИВЕР\2 курс\2 сем\проги\LW8\LW8_DataBases\obj\Debug\LW8_DataBases.exe
+F:\Кирилл\УНИВЕР\2 курс\2 сем\проги\LW8\LW8_DataBases\obj\Debug\LW8_DataBases.pdb
+F:\Кирилл\УНИВЕР\2 курс\2 сем\проги\LW8\LW8_DataBases\obj\Debug\LW8_DataBases.MainForm.resources
+F:\Кирилл\VisualStudioProjects\LW8_DataBases\LW8_DataBases\bin\Debug\LW8_DataBases.exe.config
+F:\Кирилл\VisualStudioProjects\LW8_DataBases\LW8_DataBases\bin\Debug\LW8_DataBases.exe
+F:\Кирилл\VisualStudioProjects\LW8_DataBases\LW8_DataBases\bin\Debug\LW8_DataBases.pdb
+F:\Кирилл\VisualStudioProjects\LW8_DataBases\LW8_DataBases\obj\Debug\LW8_DataBases.csprojAssemblyReference.cache
+F:\Кирилл\VisualStudioProjects\LW8_DataBases\LW8_DataBases\obj\Debug\LW8_DataBases.MainForm.resources
+F:\Кирилл\VisualStudioProjects\LW8_DataBases\LW8_DataBases\obj\Debug\LW8_DataBases.Properties.Resources.resources
+F:\Кирилл\VisualStudioProjects\LW8_DataBases\LW8_DataBases\obj\Debug\LW8_DataBases.csproj.GenerateResource.cache
+F:\Кирилл\VisualStudioProjects\LW8_DataBases\LW8_DataBases\obj\Debug\LW8_DataBases.csproj.CoreCompileInputs.cache
+F:\Кирилл\VisualStudioProjects\LW8_DataBases\LW8_DataBases\obj\Debug\LW8_DataBases.exe
+F:\Кирилл\VisualStudioProjects\LW8_DataBases\LW8_DataBases\obj\Debug\LW8_DataBases.pdb
+F:\Кирилл\VisualStudioProjects\LW8_DataBases\LW8_DataBases\obj\Debug\LW8_DataBases.Illness.resources
+F:\Кирилл\VisualStudioProjects\LW8_DataBases\LW8_DataBases\obj\Debug\LW8_DataBases.Types.resources
+F:\Кирилл\VisualStudioProjects\LW8_DataBases\LW8_DataBases\obj\Debug\LW8_DataBases.Breeds.resources
+F:\Кирилл\VisualStudioProjects\LW8_DataBases\LW8_DataBases\obj\Debug\LW8_DataBases.AboutProgram.resources
